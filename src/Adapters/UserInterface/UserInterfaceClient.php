@@ -3,7 +3,7 @@
 namespace FluxEco\ApiGateway\Adapters\UserInterface;
 
 use FluxEco\ApiGateway\Core\{Ports};
-use Flux\Eco\UserInterface\Adapters\Api\UserInterfaceApi;
+use FluxEco\UiTransformer\Adapters\Api\UserInterfaceApi;
 
 class UserInterfaceClient implements Ports\UserInterface\UserInterfaceClient
 {

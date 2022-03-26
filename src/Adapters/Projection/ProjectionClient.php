@@ -4,7 +4,7 @@
 namespace FluxEco\ApiGateway\Adapters\Projection;
 
 use FluxEco\ApiGateway\Core\{Ports};
-use Flux\Eco\Projection\Adapters\Api\ProjectionApi;
+use FluxEco\Projection\Adapters\Api\ProjectionApi;
 
 class ProjectionClient implements Ports\Projection\ProjectionClient
 {

@@ -3,7 +3,7 @@
 
 namespace FluxEco\ApiGateway\Adapters\AggregateRoot;
 
-use Flux\Eco\AggregateRoot\Adapters\Api\AggregateRootApi;
+use FluxEco\AggregateRoot\Adapters\Api\AggregateRootApi;
 use FluxEco\ApiGateway\Core\{Ports};
 
 class AggregateRootClient implements Ports\AggregateRoot\AggregateRootClient

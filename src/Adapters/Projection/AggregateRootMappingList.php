@@ -3,7 +3,7 @@
 namespace FluxEco\ApiGateway\Adapters\Projection;
 
 use FluxEco\ApiGateway\{Core\Ports};
-use Flux\Eco\Projection\Adapters\Api;
+use FluxEco\Projection\Adapters\Api;
 
 class AggregateRootMappingList implements Ports\Projection\AggregateRootMappingList
 {

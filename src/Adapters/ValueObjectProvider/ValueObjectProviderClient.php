@@ -3,7 +3,7 @@
 namespace FluxEco\ApiGateway\Adapters\ValueObjectProvider;
 
 use FluxEco\ApiGateway\Core;
-use Flux\Eco\ObjectProvider\ValueObject\Adapters\Api;
+use FluxEco\ValueObjectAdapters\Api;
 
 
 class ValueObjectProviderClient implements Core\Ports\ValueObjectProvider\ValueObjectProviderClient
