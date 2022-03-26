@@ -1,5 +1,5 @@
 {
-  "name": "flux-eco/api-gateway",
+  "name": "flux-eco/api-gateway-event-sourced-app",
   "description": "Component for flux-capacitor apps developed by fluxlabs",
   "version": "0.0.1",
   "type": "flux-app",
@@ -62,7 +62,7 @@
   },
   "autoload": {
     "psr-4": {
-      "FluxEco\\ApiGateway\\": [
+      "FluxEco\\ApiGatewayEventSourcedApp\\": [
         "src/"
       ]
     }
