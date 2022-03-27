@@ -44,6 +44,7 @@ class CreateItemHandler implements CommandHandler
     {
         if ($command->getOperationName() !== $this->createItemOperationName) {
             $this->process($command, $nextHandlers);
+            return;
         }
 
         $correlationId = $command->getCorrelationId();

@@ -39,6 +39,7 @@ class DeleteItemByProjectionIdHandler {
     {
         if ($command->getOperationName() !== $this->deleteItemOperationName) {
             $this->process($command, $nextHandlers);
+            return;
         }
 
         if (strlen($command->getProjectionId()) === 0) {

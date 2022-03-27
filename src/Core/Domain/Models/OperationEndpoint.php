@@ -29,7 +29,7 @@ class OperationEndpoint
         $operationName = end($pathParts);
 
         $projectionId = '';
-        $itemLabelKey = array_search('item', $pathParts);
+        $itemLabelKey = array_search('item', $pathParts, true);
         if ($itemLabelKey !== false) {
             $itemIdKey = $itemLabelKey + 1;
             $projectionId = $pathParts[$itemIdKey];

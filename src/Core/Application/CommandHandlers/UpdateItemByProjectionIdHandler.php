@@ -36,10 +36,12 @@ class UpdateItemByProjectionIdHandler
     {
         if ($command->getOperationName() !== $this->updateItemOperationName) {
             $this->process($command, $nextHandlers);
+            return;
         }
 
         if (strlen($command->getProjectionId()) === 0) {
             $this->process($command, $nextHandlers);
+            return;
         }
 
         $correlationId = $command->getCorrelationId();
