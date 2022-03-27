@@ -15,5 +15,5 @@ interface ProjectionClient
 
     public function getProjectionIdForExternalIdIfExists(string $projectionName, string $externalId): ?string;
 
-    public function getAggregateRootMappingList(string $projectionName, string $projectionId, array $data, ?string $externalId = null): AggregateRootMappingList;
+    public function getAggregateRootMappingList(string $projectionName, string $projectionId, array $requestContent, ?string $externalId = null): AggregateRootMappingList;
 }

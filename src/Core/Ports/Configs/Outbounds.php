@@ -9,5 +9,5 @@ interface Outbounds
    public function getGlobalStreamClient(): Ports\GlobalStream\GlobalStreamClient;
    public function getProjectionClient(): Ports\Projection\ProjectionClient;
    public function getUserInterfaceClient(): Ports\UserInterface\UserInterfaceClient;
-   public function getValueObjectProvider(): Ports\ValueObjectProvider\ValueObjectProviderClient;
+   public function getValueObjectClient(): Ports\ValueObject\ValueObjectClient;
 }

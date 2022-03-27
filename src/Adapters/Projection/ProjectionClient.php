@@ -50,9 +50,9 @@ class ProjectionClient implements Ports\Projection\ProjectionClient
         return null;
     }
 
-    final public function getAggregateRootMappingList(string $projectionName, string $projectionId, array $data, ?string $externalId = null): AggregateRootMappingList
+    final public function getAggregateRootMappingList(string $projectionName, string $projectionId, array $requestContent, ?string $externalId = null): AggregateRootMappingList
     {
-        $aggregateRootMappingsApiResult = $this->projectionApi->getAggregateRootMapping($projectionName, $projectionId, $data, $externalId);
+        $aggregateRootMappingsApiResult = $this->projectionApi->getAggregateRootMapping($projectionName, $projectionId, $requestContent, $externalId);
 
         return AggregateRootMappingList::fromProjectionApiResult($aggregateRootMappingsApiResult);
     }

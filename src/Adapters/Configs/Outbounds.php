@@ -27,9 +27,9 @@ class Outbounds implements Ports\Configs\Outbounds
         return Adapters\GlobalStream\GlobalStreamClient::new();
     }
 
-    public function getValueObjectProvider() : Ports\ValueObjectProvider\ValueObjectProviderClient
+    public function getValueObjectClient() : Ports\ValueObject\ValueObjectClient
     {
-        return Adapters\ValueObjectProvider\ValueObjectProviderClient::new();
+        return Adapters\ValueObject\ValueObjectClient::new();
     }
 
     public function getProjectionClient() : Ports\Projection\ProjectionClient

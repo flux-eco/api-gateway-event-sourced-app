@@ -1,0 +1,604 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "fluxeco-api-gateway-event-sourced-app",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/query/{projectionName}/getItemList": {
+      "summary": "list projection data",
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "description": "list",
+        "operationId": "getItemList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectionName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "parentId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Query items by its parent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/itemList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/query/{projectionName}/item/{projectionId}/getItem": {
+      "summary": "projection item",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "in": "path",
+          "name": "projectionId",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "description": "show",
+        "operationId": "getItem",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/command/{projectionName}/item/{projectionId}/updateItem": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "in": "path",
+          "name": "projectionId",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "api"
+        ],
+        "description": "update all corresponding aggregateRoots",
+        "operationId": "update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/command/{projectionName}/createItem": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "put": {
+        "tags": [
+          "api"
+        ],
+        "description": "add",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/command/{projectionName}/item/{projectionId}/deleteItem": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "in": "path",
+          "name": "projectionId",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "delete": {
+        "tags": [
+          "api"
+        ],
+        "description": "remove",
+        "operationId": "deleteItem",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+    "/api/v1/query/getPageList": {
+      "summary": "list pages",
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "description": "list pages",
+        "operationId": "getPageList",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/v1/query/{projectionName}/getPage": {
+      "summary": "page definition",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "operationId": "getPage",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDefinition"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/query/{projectionName}/getTable": {
+      "summary": "table page definition",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "description": "table page",
+        "operationId": "getTable",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TablePageDefinition"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/query/{projectionName}/getEditFormDefinition": {
+      "summary": "editFormPageDefinition",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectionName",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "description": "overview page",
+        "operationId": "getEditFormPageDefinition",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditFormPageDefinition"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FormCreate": {
+        "type": "object",
+        "properties": {
+          "rootObjectAggregateName": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "dragable": {
+                "type": "boolean"
+              },
+              "showDragHandler": {
+                "type": true
+              }
+            }
+          },
+          "properties": {
+            "type": "array"
+          }
+        }
+      },
+      "PageList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Page"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "total Pages",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "PageDefinition": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "formCreate": {
+            "$ref": "#/components/schemas/FormCreate"
+          },
+          "formEdit": {
+            "type": "array"
+          },
+          "itemActions": {
+            "type": "array"
+          }
+        }
+      },
+      "TablePageDefinition": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "formCreate": {
+            "$ref": "#/components/schemas/FormCreate"
+          },
+          "formEdit": {
+            "type": "array"
+          },
+          "tableFilter": {
+            "type": "array"
+          },
+          "table": {
+            "type": "array"
+          },
+          "itemActions": {
+            "type": "array"
+          }
+        }
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "projectionId": {
+            "type": "string",
+            "required": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "itemList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "total Modules",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EditFormPageDefinition": {
+        "type": "array"
+      },
+      "schemaObjectApi": {
+        "type": "object",
+        "properties": {
+          "apiDefinition": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "operationType": {
+            "type": "string"
+          },
+          "apiLink": {
+            "type": "string"
+          }
+        }
+      },
+      "ListSource": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "required": [
+          "errorCode"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "description": "42"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Success"
+          }
+        }
+      }
+    }
+  }
+}

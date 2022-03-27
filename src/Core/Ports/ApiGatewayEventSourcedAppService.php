@@ -2,50 +2,51 @@
 
 namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports;
 
+use FluxEco\ApiGatewayEventSourcedApp\Core\Application\Processes;
+
 class ApiGatewayEventSourcedAppService
 {
-    private AggregateRoot\AggregateRootClient $aggregateRootClient;
-    private GlobalStream\GlobalStreamClient $globalStreamClient;
-    private Projection\ProjectionClient $projectionClient;
-    private UserInterface\UserInterfaceClient $userInterfaceClient;
-    private ValueObjectProvider\ValueObjectProviderClient $valueObjectProviderClient;
+    private Configs\Outbounds $outbounds;
 
     private function __construct(
-        AggregateRoot\AggregateRootClient $aggregateRootClient,
-        GlobalStream\GlobalStreamClient $globalStreamClient,
-        Projection\ProjectionClient $projectionClient,
-        UserInterface\UserInterfaceClient $userInterfaceClient,
-        ValueObjectProvider\ValueObjectProviderClient $valueObjectProviderClient
+        Configs\Outbounds $outbounds
     ) {
-        $this->aggregateRootClient = $aggregateRootClient;
-        $this->globalStreamClient = $globalStreamClient;
-        $this->projectionClient = $projectionClient;
-        $this->userInterfaceClient = $userInterfaceClient;
-        $this->valueObjectProviderClient = $valueObjectProviderClient;
+        $this->outbounds = $outbounds;
     }
 
     public static function new(
         Configs\Outbounds $outbounds
     ) : self {
         return new self(
-            $outbounds->getAggregateRootClient(),
-            $outbounds->getGlobalStreamClient(),
-            $outbounds->getProjectionClient(),
-            $outbounds->getUserInterfaceClient(),
-            $outbounds->getValueObjectProvider()
+            $outbounds
         );
     }
 
     final public function initialize() : void
     {
-        $this->aggregateRootClient->initializeAggregateRoots();
-        $this->globalStreamClient->initializeGlobalStream();
-        $this->projectionClient->initializeProjections();
+        $this->outbounds->getAggregateRootClient()->initializeAggregateRoots();
+        $this->outbounds->getGlobalStreamClient()->initializeGlobalStream();
+        $this->outbounds->getProjectionClient()->initializeProjections();
     }
 
-    final public function getNewCorrelationId() : string
-    {
-        return $this->valueObjectProviderClient->createUuid();
+    public function command(
+        string $correlationId,
+        string $actorEmail,
+        string $requestUri,
+        array $requestContent
+    ) : void {
+        $commandRequest = Processes\CommandRequest::new($correlationId, $actorEmail, $requestUri, $requestContent);
+        Processes\CommandRequestProcess::new($this->outbounds)->process($commandRequest);
+    }
+
+    public function query(
+        string $correlationId,
+        string $actorEmail,
+        string $requestUri,
+        array $requestContent
+    ) : array {
+        $queryRequest = Processes\QueryRequest::new($correlationId, $actorEmail, $requestUri, $requestContent);
+        return Processes\QueryRequestProcess::new($this->outbounds)->process($queryRequest);
     }
 
     final public function storeItemByExternalId(
@@ -64,80 +65,4 @@ class ApiGatewayEventSourcedAppService
         $this->updteItem($correlationId, $actorEmail, $projectionName, $projectionId, $data);
     }
 
-    final public function createItem(
-        string $correlationId,
-        string $actorEmail,
-        string $projectionName,
-        array $data,
-        ?string $externalId = null
-    ) : void {
-        $projectionId = $this->valueObjectProviderClient->createUuid();
-        $aggregateRootMappingList = $this->projectionClient->getAggregateRootMappingList($projectionName, $projectionId,
-            $data, $externalId);
-
-        foreach ($aggregateRootMappingList->getMappings() as $key => $aggregateRootMapping) {
-            $this->aggregateRootClient->create($correlationId, $actorEmail, $aggregateRootMapping->getAggregateName(),
-                $aggregateRootMapping->getAggregateId(), $aggregateRootMapping->getProperties());
-        }
-    }
-
-    final public function updteItem(
-        string $correlationId,
-        string $actorEmail,
-        string $projectionName,
-        string $projectionId,
-        array $data
-    ) : void {
-        $aggregateRootMappingList = $this->projectionClient->getAggregateRootMappingList($projectionName, $projectionId,
-            $data);
-
-        foreach ($aggregateRootMappingList->getMappings() as $key => $aggregateRootMapping) {
-            $this->aggregateRootClient->update($correlationId, $actorEmail, $aggregateRootMapping->getAggregateName(),
-                $aggregateRootMapping->getAggregateId(), $aggregateRootMapping->getProperties());
-        }
-    }
-
-    final public function delete(
-        string $correlationId,
-        string $actorEmail,
-        string $projectionName,
-        string $projectionId
-    ) : void {
-        $aggregateRootMappings = $this->projectionClient->getAggregateRootMappingsForProjectionId($projectionId);
-
-        if ($aggregateRootMappings !== null) {
-            foreach ($aggregateRootMappings as $mapping) {
-                $this->aggregateRootClient->delete($correlationId, $actorEmail, $mapping->getAggregateName(),
-                    $mapping->getAggregateId());
-            }
-        }
-    }
-
-    final public function getItem(
-        string $correlationId,
-        string $actorEmail,
-        string $projectionName,
-        string $projectionId
-    ) : array {
-        return $this->projectionClient->getItem($projectionName, $projectionId);
-    }
-
-    final public function getItemList(
-        string $correlationId,
-        string $actorEmail,
-        string $projectionName,
-        array $filter
-    ) : array {
-        return $this->projectionClient->getItemList($projectionName, $filter);
-    }
-
-    final public function getUiPage(string $correlationId, string $actorEmail, string $representationName) : array
-    {
-        return $this->userInterfaceClient->getUiPage($representationName);
-    }
-
-    final public function getUiPageList(string $correlationId, string $actorEmail) : array
-    {
-        return $this->userInterfaceClient->getUiPageList();
-    }
 }
