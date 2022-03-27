@@ -10,26 +10,26 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
  * @author martin@fluxlabs.ch
  */
 class DeleteItemByProjectionIdHandler {
-    private string $updateItemOperationName;
+    private string $deleteItemOperationName;
     private Ports\AggregateRoot\AggregateRootClient $aggregateRootClient;
     private Ports\Projection\ProjectionClient $projectionClient;
 
     private function __construct(
-        string $updateItemOperationName,
+        string $deleteItemOperationName,
         Ports\AggregateRoot\AggregateRootClient $aggregateRootClient,
         Ports\Projection\ProjectionClient $projectionClient
     ) {
-        $this->updateItemOperationName = $updateItemOperationName;
+        $this->deleteItemOperationName = $deleteItemOperationName;
         $this->aggregateRootClient = $aggregateRootClient;
         $this->projectionClient = $projectionClient;
     }
 
     public static function new(
-        $updateItemOperationName,
+        $deleteItemOperationName,
         Ports\Configs\Outbounds $outbounds
     ) {
         return new self(
-            $updateItemOperationName,
+            $deleteItemOperationName,
             $outbounds->getAggregateRootClient(),
             $outbounds->getProjectionClient()
         );
@@ -37,11 +37,12 @@ class DeleteItemByProjectionIdHandler {
 
     public function handle(Command $command, array $nextHandlers) : void
     {
-        if ($command->getOperationName() !== $this->updateItemOperationName) {
+        if ($command->getOperationName() !== $this->deleteItemOperationName) {
             $this->process($command, $nextHandlers);
         }
 
         if (strlen($command->getProjectionId()) === 0) {
+            echo "no projectionID given for command ".$command;
             $this->process($command, $nextHandlers);
         }
 
