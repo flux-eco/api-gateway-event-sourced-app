@@ -62,7 +62,7 @@
   },
   "autoload": {
     "psr-4": {
-      "FluxEco\\ApiGateway\\": [
+      "FluxEco\\ApiGatewayEventSourcedApp\\": [
         "src/"
       ]
     }
