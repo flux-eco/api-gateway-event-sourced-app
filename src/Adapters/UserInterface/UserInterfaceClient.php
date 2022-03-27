@@ -3,20 +3,20 @@
 namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\UserInterface;
 
 use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
-use FluxEco\UiTransformer\Adapters\Api\UserInterfaceApi;
+use FluxEco\UiTransformer\Adapters\Api\UiTransformerApi;
 
 class UserInterfaceClient implements Ports\UserInterface\UserInterfaceClient
 {
-    private UserInterfaceApi $userInterfaceApi;
+    private UiTransformerApi $userInterfaceApi;
 
-    private function __construct(UserInterfaceApi $userInterfaceApi)
+    private function __construct(UiTransformerApi $userInterfaceApi)
     {
         $this->userInterfaceApi = $userInterfaceApi;
     }
 
     public static function new(): self
     {
-        $userInterfaceApi = UserInterfaceApi::new();
+        $userInterfaceApi = UiTransformerApi::new();
 
         return new self($userInterfaceApi);
     }
