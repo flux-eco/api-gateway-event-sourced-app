@@ -31,8 +31,8 @@ class Command
         $this->actorEmail = $actorEmail;
         $this->operationName = $operationName;
         $this->projectionName = $projectionName;
-        $this->projectionId = $projectionId;
         $this->requestContent = $requestContent;
+        $this->projectionId = $projectionId;
         $this->externalId = $externalId;
     }
 

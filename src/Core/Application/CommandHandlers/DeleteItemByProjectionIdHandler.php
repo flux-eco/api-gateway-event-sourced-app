@@ -42,7 +42,7 @@ class DeleteItemByProjectionIdHandler {
         }
 
         if (strlen($command->getProjectionId()) === 0) {
-            echo "no projectionID given for command ".$command;
+            echo "no projectionID given for command ".print_r($command, true);
             $this->process($command, $nextHandlers);
         }
 
