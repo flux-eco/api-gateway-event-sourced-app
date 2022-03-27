@@ -1,27 +1,31 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Adapters\Api;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\Api;
 
-use FluxEco\ApiGateway\{Core\Ports};
-use FluxEco\ApiGateway\Adapters;
+use FluxEco\ApiGatewayEventSourcedApp\{Core\Ports};
+use FluxEco\ApiGatewayEventSourcedApp\Adapters;
 
-class GatewayApi
+class ApiGatewayEventSourcedAppApi
 {
 
-    private Ports\GatewayService $gatewayService;
+    private Ports\ApiGatewayEventSourcedAppService $gatewayService;
 
-    private function __construct(Ports\GatewayService $gatewayService)
+    private function __construct(Ports\ApiGatewayEventSourcedAppService $gatewayService)
     {
         $this->gatewayService = $gatewayService;
     }
 
     public static function new(): self
     {
-        $outbounds = Adapters\Configs\GatewayOutbounds::new();
-        $gatewayService = Ports\GatewayService::new($outbounds);
+        $outbounds = Adapters\Configs\Outbounds::new();
+        $gatewayService = Ports\ApiGatewayEventSourcedAppService::new($outbounds);
 
         return new self($gatewayService);
+    }
+
+    public function initialize() : void {
+        $this->gatewayService->initialize();
     }
 
     final public function getNewCorrelationId(): string {

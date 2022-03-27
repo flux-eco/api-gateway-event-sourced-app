@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\UserInterface;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\UserInterface;
 
 interface UserInterfaceClient
 {

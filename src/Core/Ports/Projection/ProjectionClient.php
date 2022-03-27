@@ -1,10 +1,12 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\Projection;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\Projection;
 
 interface ProjectionClient
 {
+    public function initializeProjections(): void;
+
     public function getItem(string $projectionName, string $projectionId): array;
 
     public function getItemList(string $projectionName, array $filter): array;

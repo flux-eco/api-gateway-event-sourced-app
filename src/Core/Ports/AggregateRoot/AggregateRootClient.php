@@ -1,10 +1,12 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\AggregateRoot;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\AggregateRoot;
 
 interface AggregateRootClient
 {
+    public function initializeAggregateRoots(): void;
+
     public function create(
         string $correlationId,
         string $actorEmail,

@@ -1,8 +1,8 @@
 <?php
 
-namespace FluxEco\ApiGateway\Adapters\Projection;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\Projection;
 
-use FluxEco\ApiGateway\{Core\Ports};
+use FluxEco\ApiGatewayEventSourcedApp\{Core\Ports};
 use FluxEco\Projection\Adapters\Api;
 
 

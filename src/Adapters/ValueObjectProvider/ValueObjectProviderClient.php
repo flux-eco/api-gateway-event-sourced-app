@@ -1,9 +1,9 @@
 <?php
 
-namespace FluxEco\ApiGateway\Adapters\ValueObjectProvider;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\ValueObjectProvider;
 
-use FluxEco\ApiGateway\Core;
-use FluxEco\ValueObjectAdapters\Api;
+use FluxEco\ApiGatewayEventSourcedApp\Core;
+use FluxEco\ValueObject\Adapters\Api;
 
 
 class ValueObjectProviderClient implements Core\Ports\ValueObjectProvider\ValueObjectProviderClient

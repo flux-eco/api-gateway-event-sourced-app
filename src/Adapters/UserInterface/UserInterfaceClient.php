@@ -1,8 +1,8 @@
 <?php
 
-namespace FluxEco\ApiGateway\Adapters\UserInterface;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\UserInterface;
 
-use FluxEco\ApiGateway\Core\{Ports};
+use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
 use FluxEco\UiTransformer\Adapters\Api\UserInterfaceApi;
 
 class UserInterfaceClient implements Ports\UserInterface\UserInterfaceClient

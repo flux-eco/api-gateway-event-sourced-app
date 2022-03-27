@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\AggregateRoot;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\AggregateRoot;
 
 interface AggregateRootProperty
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\Projection;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\Projection;
 
 interface AggregateRootMapping
 {

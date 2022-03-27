@@ -1,10 +1,11 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Adapters\Projection;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\Projection;
 
-use FluxEco\ApiGateway\Core\{Ports};
+use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
 use FluxEco\Projection\Adapters\Api\ProjectionApi;
+use FluxEco\GlobalStream\Adapters\Api\GlobalStreamApi;
 
 class ProjectionClient implements Ports\Projection\ProjectionClient
 {
@@ -19,6 +20,10 @@ class ProjectionClient implements Ports\Projection\ProjectionClient
     {
         $projectionApi = ProjectionApi::new();
         return new self($projectionApi);
+    }
+
+    final public function initializeProjections(): void {
+        $this->projectionApi->initializeProjections();
     }
 
     final public function getItem(string $projectionName, string $projectionId): array

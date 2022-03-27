@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Core\Ports\ValueObjectProvider;
+namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports\ValueObjectProvider;
 
 interface ValueObjectProviderClient
 {

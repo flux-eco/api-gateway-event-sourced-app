@@ -1,10 +1,10 @@
 <?php
 
 
-namespace FluxEco\ApiGateway\Adapters\AggregateRoot;
+namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\AggregateRoot;
 
 use FluxEco\AggregateRoot\Adapters\Api\AggregateRootApi;
-use FluxEco\ApiGateway\Core\{Ports};
+use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
 
 class AggregateRootClient implements Ports\AggregateRoot\AggregateRootClient
 {
@@ -19,6 +19,11 @@ class AggregateRootClient implements Ports\AggregateRoot\AggregateRootClient
     {
         $aggregateRootApi = AggregateRootApi::new();
         return new self($aggregateRootApi);
+    }
+
+    final public function initializeAggregateRoots(): void
+    {
+        $this->aggregateRootApi->initializeAggregateRoots();
     }
 
     /**
