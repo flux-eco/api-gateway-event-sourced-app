@@ -1,2 +1,2 @@
-# api-gateway
+# api-gateway-event-sourced-app
 
