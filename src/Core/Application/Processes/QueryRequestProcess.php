@@ -33,7 +33,7 @@ class QueryRequestProcess implements Application\QueryHandlers\QueryHandler
                 Domain\Models\QueryOperationsEnum::new()->getPage,
                 $outbounds
             ),
-            Application\QueryHandlers\GetItemListHandler::new(
+            Application\QueryHandlers\GetUiPageListHandler::new(
                 Domain\Models\QueryOperationsEnum::new()->getPageList,
                 $outbounds
             ),
