@@ -21,29 +21,11 @@
   "support": {
     "email": "support@fluxlabs.ch"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "ssh://git@git.fluxlabs.ch:10022/fluxlabs/flux-eco/projection.git"
-    },
-    {
-      "type": "vcs",
-      "url": "ssh://git@git.fluxlabs.ch:10022/fluxlabs/flux-eco/aggregate-root.git"
-    },
-    {
-      "type": "vcs",
-      "url": "ssh://git@git.fluxlabs.ch:10022/fluxlabs/flux-eco/value-object.git"
-    },
-    {
-      "type": "vcs",
-      "url": "ssh://git@git.fluxlabs.ch:10022/fluxlabs/flux-eco/ui-transformer.git"
-    }
-  ],
   "require": {
-    "flux-eco/projection": "dev-main",
-    "flux-eco/aggregate-root": "dev-main",
-    "flux-eco/value-object": "dev-main",
-    "flux-eco/ui-transformer": "dev-main",
+    "flux-eco/projection": ">=0.0.1",
+    "flux-eco/aggregate-root": ">=0.0.1",
+    "flux-eco/value-object": ">=0.0.1",
+    "flux-eco/ui-transformer": ">=0.0.1",
     "php": ">=8.0",
     "ext-curl": "*",
     "ext-json": "*",
@@ -55,10 +37,8 @@
     "psr/http-server-middleware": ">=1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": ">=9.5",
     "composer/composer": ">=2.0",
-    "swoole/ide-helper": ">=4.6",
-    "symfony/console": ">=5.2"
+    "swoole/ide-helper": ">=4.6"
   },
   "autoload": {
     "psr-4": {

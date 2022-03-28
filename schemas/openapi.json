@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "fluxeco-api-gateway-event-sourced-app",
+    "title": "flux-ecosystem",
     "version": "1.0.0"
   },
   "paths": {
@@ -241,8 +241,6 @@
         }
       }
     },
-
-
     "/api/v1/query/getPageList": {
       "summary": "list pages",
       "get": {
@@ -275,7 +273,6 @@
         }
       }
     },
-
     "/api/v1/query/{projectionName}/getPage": {
       "summary": "page definition",
       "parameters": [
@@ -317,97 +314,33 @@
           }
         }
       }
-    },
-    "/api/v1/query/{projectionName}/getTable": {
-      "summary": "table page definition",
-      "parameters": [
-        {
-          "in": "path",
-          "name": "projectionName",
-          "schema": {
-            "type": "string"
-          },
-          "required": true
-        }
-      ],
-      "get": {
-        "tags": [
-          "api"
-        ],
-        "description": "table page",
-        "operationId": "getTable",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TablePageDefinition"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/query/{projectionName}/getEditFormDefinition": {
-      "summary": "editFormPageDefinition",
-      "parameters": [
-        {
-          "in": "path",
-          "name": "projectionName",
-          "schema": {
-            "type": "string"
-          },
-          "required": true
-        }
-      ],
-      "get": {
-        "tags": [
-          "api"
-        ],
-        "description": "overview page",
-        "operationId": "getEditFormPageDefinition",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EditFormPageDefinition"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "FormCreate": {
+      "createForm": {
+        "type": "object",
+        "properties": {
+          "rootObjectAggregateName": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "dragable": {
+                "type": "boolean"
+              },
+              "showDragHandler": {
+                "type": true
+              }
+            }
+          },
+          "properties": {
+            "type": "array"
+          }
+        }
+      },
+      "editForm": {
         "type": "object",
         "properties": {
           "rootObjectAggregateName": {
@@ -448,20 +381,6 @@
           }
         }
       },
-      "Page": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "avatar": {
-            "type": "string"
-          }
-        }
-      },
       "Link": {
         "type": "object",
         "properties": {
@@ -482,33 +401,19 @@
           "avatar": {
             "type": "string"
           },
-          "formCreate": {
-            "$ref": "#/components/schemas/FormCreate"
-          },
-          "formEdit": {
-            "type": "array"
-          },
-          "itemActions": {
-            "type": "array"
-          }
-        }
-      },
-      "TablePageDefinition": {
-        "type": "object",
-        "properties": {
-          "title": {
+          "pageType": {
             "type": "string"
           },
-          "formCreate": {
-            "$ref": "#/components/schemas/FormCreate"
+          "createForm": {
+            "$ref": "#/components/schemas/createForm"
           },
-          "formEdit": {
-            "type": "array"
+          "editForm": {
+            "$ref": "#/components/schemas/editForm"
           },
           "tableFilter": {
             "type": "array"
           },
-          "table": {
+          "tableColums": {
             "type": "array"
           },
           "itemActions": {
@@ -542,40 +447,6 @@
           },
           "success": {
             "type": "boolean"
-          }
-        }
-      },
-      "EditFormPageDefinition": {
-        "type": "array"
-      },
-      "schemaObjectApi": {
-        "type": "object",
-        "properties": {
-          "apiDefinition": {
-            "type": "string"
-          },
-          "channel": {
-            "type": "string"
-          },
-          "operationType": {
-            "type": "string"
-          },
-          "apiLink": {
-            "type": "string"
-          }
-        }
-      },
-      "ListSource": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string"
-          },
-          "offset": {
-            "type": "integer"
-          },
-          "limit": {
-            "type": "integer"
           }
         }
       },
