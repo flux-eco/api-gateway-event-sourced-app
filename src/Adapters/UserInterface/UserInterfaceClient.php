@@ -30,4 +30,8 @@ class UserInterfaceClient implements Ports\UserInterface\UserInterfaceClient
     {
         return $this->userInterfaceApi->getPages();
     }
+    
+    public function getSchemaInstance(array $uiSchema): array {
+        return $this->userInterfaceApi->getSchemaInstance($uiSchema);
+    }
 }

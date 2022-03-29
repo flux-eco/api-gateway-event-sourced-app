@@ -7,4 +7,5 @@ interface UserInterfaceClient
 {
     public function getUiPage(string $projectionName): array;
     public function getUiPageList(): array;
+    public function getSchemaInstance(array $uiSchema);
 }
