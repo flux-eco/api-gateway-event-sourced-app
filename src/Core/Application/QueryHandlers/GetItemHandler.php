@@ -36,10 +36,7 @@ class GetItemHandler implements QueryHandler
             return $this->process($query, $nextHandlers);
         }
 
-        $itemDate = $this->outbounds->getProjectionClient()->getItem($query->getProjectionName(), $query->getProjectionId());
-
-        $this->outbounds->getUserInterfaceClient()->getUiPage()
-        
+        return $this->outbounds->getProjectionClient()->getItem($query->getProjectionName(), $query->getProjectionId());
     }
 
     public function process(Query $query, array $nextHandlers) : array
