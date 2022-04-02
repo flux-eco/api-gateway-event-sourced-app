@@ -1,12 +1,12 @@
 {
   "name": "flux-eco/api-gateway-event-sourced-app",
-  "description": "Component for flux-capacitor apps developed by fluxlabs",
-  "version": "0.0.1",
+  "description": "Manage requests from outside for an event sourced application",
+  "version": "0.0.2",
   "type": "flux-app",
   "keywords": [
-    "flux-ecosystem",
-    "flux-capacitor",
-    "fluxlabs ag"
+    "flux-eco",
+    "api-gateway-event-sourced-app",
+    "fluxlabs"
   ],
   "homepage": "https://fluxlabs.ch",
   "license": "GPL-3.0-only",
