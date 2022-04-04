@@ -1,11 +1,11 @@
 <?php
 
-namespace FluxEco\ApiGatewayEventSourcedApp\Adapters\Api;
+namespace FluxEco\ApiGatewayEventSourcedApp;
 
 use FluxEco\ApiGatewayEventSourcedApp\{Core\Ports};
 use FluxEco\ApiGatewayEventSourcedApp\Adapters;
 
-class ApiGatewayEventSourcedAppApi
+class Api
 {
     private Ports\ApiGatewayEventSourcedAppService $gatewayService;
 

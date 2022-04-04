@@ -1,7 +1,7 @@
 {
   "name": "flux-eco/api-gateway-event-sourced-app",
   "description": "Manage requests from outside for an event sourced application",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "type": "flux-app",
   "keywords": [
     "flux-eco",
@@ -41,9 +41,17 @@
     "swoole/ide-helper": ">=4.6"
   },
   "autoload": {
+    "files": [
+      "fn/initialize.php",
+      "fn/command.php",
+      "fn/query.php"
+    ],
     "psr-4": {
       "FluxEco\\ApiGatewayEventSourcedApp\\": [
         "src/"
+      ],
+      "fluxApiGatewayEventSourcedApp\\": [
+        "fn/"
       ]
     }
   },
