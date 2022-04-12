@@ -1,0 +1,24 @@
+title:
+  type: lngKey
+  key: pageTitle.account
+url: "/listdata/Topic"
+avatar: "/icons/seminars.png"
+pageType: ListData
+projectionName: account
+editForm:
+  $ref: editForm.yaml
+createForm:
+  $ref: createForm.yaml
+itemActions:
+  edit:
+    type: form
+    key: editForm
+    title:
+      type: lngKey
+      key: action.edit
+  delete:
+    type: form
+    key: deleteForm
+    title:
+      type: lngKey
+      key: action.delete

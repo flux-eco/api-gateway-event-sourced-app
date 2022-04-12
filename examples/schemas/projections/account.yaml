@@ -1,0 +1,13 @@
+title: account
+type: object
+aggregateRootNames:
+  - account
+properties:
+  projectionId:
+    type: string
+  firstname:
+    type: string
+    index: account.rootObject.firstname
+  lastname:
+    type: string
+    index: account.rootObject.lastname

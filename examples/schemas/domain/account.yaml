@@ -1,0 +1,42 @@
+name: account
+type: object
+properties:
+    aggregateId:
+        type: string
+        readOnly: true
+    correlationId:
+        type: string
+        readOnly: true
+    aggregateName:
+        type: string
+        const: todo
+        readOnly: true
+    sequence:
+        type: integer
+        readOnly: true
+    createdDateTime:
+        type: string
+        format: date-time
+        readOnly: true
+    createdBy:
+        type: string
+        format: email
+        readOnly: true
+    changedDateTime:
+        type: string
+        format: date-time
+        readOnly: true
+    changedBy:
+        type: string
+        format: email
+        readOnly: true
+    rootObjectSchema:
+        type: string
+        const: v1
+    rootObject:
+        type: object
+        properties:
+            firstname:
+                type: string
+            lastname:
+                type: string

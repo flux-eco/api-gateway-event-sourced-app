@@ -7,31 +7,31 @@ class CommandRequest
     private string $correlationId;
     private string $actorEmail;
     private string $requestUri;
-    private array $requestContent;
+    private array $projectionKeyValueData;
 
     private function __construct(
         string $correlationId,
         string $actorEmail,
         string $requestUri,
-        array $requestContent
+        array $projectionKeyValueData
     ) {
         $this->correlationId = $correlationId;
         $this->actorEmail = $actorEmail;
         $this->requestUri = $requestUri;
-        $this->requestContent = $requestContent;
+        $this->projectionKeyValueData = $projectionKeyValueData;
     }
 
     public static function new(
         string $correlationId,
         string $actorEmail,
         string $requestUri,
-        array $requestContent
+        array $projectionKeyValueData
     ) {
         return new self(
             $correlationId,
             $actorEmail,
             $requestUri,
-            $requestContent
+            $projectionKeyValueData
         );
     }
 
@@ -50,9 +50,9 @@ class CommandRequest
         return $this->actorEmail;
     }
 
-    public function getRequestContent() : array
+    public function getProjectionKeyValueData() : array
     {
-        return $this->requestContent;
+        return $this->projectionKeyValueData;
     }
 
 }

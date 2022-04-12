@@ -1,0 +1,8 @@
+pageTitle:
+  account: Account
+account:
+  firstname: Firstname
+  lastname: Lastname
+action:
+  delete: delete
+  edit: edit

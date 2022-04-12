@@ -18,7 +18,7 @@ class QueryRequestProcess implements Application\QueryHandlers\QueryHandler
      */
     private array $handlerQueue;
 
-    private function __construct(Ports\Configs\Outbounds $outbounds)
+    private function __construct(Ports\Outbounds $outbounds)
     {
         $this->handlerQueue = [
             Application\QueryHandlers\GetItemHandler::new(
@@ -41,7 +41,7 @@ class QueryRequestProcess implements Application\QueryHandlers\QueryHandler
         ];
     }
 
-    public static function new(Ports\Configs\Outbounds $outbounds) : self
+    public static function new(Ports\Outbounds $outbounds) : self
     {
         return new self($outbounds);
     }

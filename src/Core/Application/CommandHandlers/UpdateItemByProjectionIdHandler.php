@@ -8,27 +8,23 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
 class UpdateItemByProjectionIdHandler
 {
     private string $updateItemOperationName;
-    private Ports\AggregateRoot\AggregateRootClient $aggregateRootClient;
-    private Ports\Projection\ProjectionClient $projectionClient;
+    private Ports\Outbounds $outbounds;
 
     private function __construct(
         string $updateItemOperationName,
-        Ports\AggregateRoot\AggregateRootClient $aggregateRootClient,
-        Ports\Projection\ProjectionClient $projectionClient
+        Ports\Outbounds $outbounds
     ) {
         $this->updateItemOperationName = $updateItemOperationName;
-        $this->aggregateRootClient = $aggregateRootClient;
-        $this->projectionClient = $projectionClient;
+        $this->outbounds = $outbounds;
     }
 
     public static function  new(
         $updateItemOperationName,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) {
         return new self(
             $updateItemOperationName,
-            $outbounds->getAggregateRootClient(),
-            $outbounds->getProjectionClient()
+            $outbounds
         );
     }
 
@@ -48,14 +44,21 @@ class UpdateItemByProjectionIdHandler
         $actorEmail = $command->getActorEmail();
         $projectionName = $command->getProjectionName();
         $projectionId = $command->getProjectionId();
-        $requestContent = $command->getRequestContent();
+        $keyValueData = $command->getKeyValueData();
 
-        $aggregateRootMappingList = $this->projectionClient->getAggregateRootMappingList($projectionName, $projectionId,
-            $requestContent);
+        $aggregateRootMappings = $this->outbounds->getAggregateRootMappingsForProjectionData($projectionName, $keyValueData);
 
-        foreach ($aggregateRootMappingList->getMappings() as $key => $aggregateRootMapping) {
-            $this->aggregateRootClient->update($correlationId, $actorEmail, $aggregateRootMapping->getAggregateName(),
-                $aggregateRootMapping->getAggregateId(), $aggregateRootMapping->getProperties());
+        foreach ($aggregateRootMappings as $aggregateName => $aggregateKeyValueData) {
+
+            $aggregateId = $this->outbounds->getAggregateIdForProjectionId($projectionName, $projectionId, $aggregateName);
+
+            $this->outbounds->createAggregateRoot(
+                $correlationId,
+                $actorEmail,
+                $aggregateId,
+                $aggregateName,
+                $aggregateKeyValueData
+            );
         }
     }
 

@@ -7,17 +7,17 @@ use FluxEco\ApiGatewayEventSourcedApp\Adapters;
 
 class Api
 {
-    private Ports\ApiGatewayEventSourcedAppService $gatewayService;
+    private Ports\Service $gatewayService;
 
-    private function __construct(Ports\ApiGatewayEventSourcedAppService $gatewayService)
+    private function __construct(Ports\Service $gatewayService)
     {
         $this->gatewayService = $gatewayService;
     }
 
     public static function new() : self
     {
-        $outbounds = Adapters\Configs\Outbounds::new();
-        $gatewayService = Ports\ApiGatewayEventSourcedAppService::new($outbounds);
+        $outbounds = Adapters\Outbounds::new();
+        $gatewayService = Ports\Service::new($outbounds);
 
         return new self($gatewayService);
     }
@@ -31,9 +31,9 @@ class Api
         string $correlationId,
         string $actorEmail,
         string $requestUri,
-        array $requestContent
+        array $projectionKeyValueData
     ) : void {
-        $this->gatewayService->command($correlationId, $actorEmail, $requestUri, $requestContent);
+        $this->gatewayService->command($correlationId, $actorEmail, $requestUri, $projectionKeyValueData);
     }
 
     public function query(

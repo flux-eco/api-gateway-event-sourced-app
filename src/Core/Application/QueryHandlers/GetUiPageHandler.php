@@ -10,11 +10,11 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Application, Domain, Ports};
 class GetUiPageHandler implements QueryHandler
 {
     private string $getUiPageHandler;
-    private Ports\Configs\Outbounds $outbounds;
+    private Ports\Outbounds $outbounds;
 
     private function __construct(
         string $getUiPageHandler,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) {
         $this->getUiPageHandler = $getUiPageHandler;
         $this->outbounds = $outbounds;
@@ -22,7 +22,7 @@ class GetUiPageHandler implements QueryHandler
 
     public static function new(
         $getItemOperationName,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) : self {
         return new self(
             $getItemOperationName,
@@ -36,7 +36,7 @@ class GetUiPageHandler implements QueryHandler
             return $this->process($query, $nextHandlers);
         }
 
-        return $this->outbounds->getUserInterfaceClient()->getUiPage($query->getProjectionName());
+        return $this->outbounds->getUiPage($query->getProjectionName());
     }
 
     public function process(Query $query, array $nextHandlers) : array
