@@ -11,32 +11,23 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
 class CreateItemHandler implements CommandHandler
 {
     private string $createItemOperationName;
-    private Ports\AggregateRoot\AggregateRootClient $aggregateRootClient;
-    private Ports\Projection\ProjectionClient $projectionClient;
-    private Ports\ValueObject\ValueObjectClient $valueObjectProviderClient;
+    private Ports\Outbounds $outbounds;
 
     private function __construct(
         string $createItemOperationName,
-        Ports\AggregateRoot\AggregateRootClient $aggregateRootClient,
-        Ports\Projection\ProjectionClient $projectionClient,
-        Ports\ValueObject\ValueObjectClient $valueObjectProviderClient
-    )
-    {
+        Ports\Outbounds $outbounds
+    ) {
         $this->createItemOperationName = $createItemOperationName;
-        $this->aggregateRootClient = $aggregateRootClient;
-        $this->projectionClient = $projectionClient;
-        $this->valueObjectProviderClient = $valueObjectProviderClient;
+        $this->outbounds = $outbounds;
     }
 
     public static function new(
         $createItemOperationName,
-        Ports\Configs\Outbounds $outbounds
-    ): self {
+        Ports\Outbounds $outbounds
+    ) : self {
         return new self(
             $createItemOperationName,
-            $outbounds->getAggregateRootClient(),
-            $outbounds->getProjectionClient(),
-            $outbounds->getValueObjectClient()
+            $outbounds
         );
     }
 
@@ -50,20 +41,22 @@ class CreateItemHandler implements CommandHandler
         $correlationId = $command->getCorrelationId();
         $actorEmail = $command->getActorEmail();
         $projectionName = $command->getProjectionName();
-        $projectionId = $this->valueObjectProviderClient->createUuid();
-        $requestContent = $command->getRequestContent();
-        $externalId = $command->getExternalId();
+        $keyValueData = $command->getKeyValueData();
 
-        $aggregateRootMappingList = $this->projectionClient->getAggregateRootMappingList(
-            $projectionName,
-            $projectionId,
-            $requestContent,
-            $externalId
-        );
+        $aggregateRootMappings = $this->outbounds->getAggregateRootMappingsForProjectionData($projectionName,
+            $keyValueData);
 
-        foreach ($aggregateRootMappingList->getMappings() as $aggregateRootMapping) {
-            $this->aggregateRootClient->create($correlationId, $actorEmail, $aggregateRootMapping->getAggregateName(),
-                $aggregateRootMapping->getAggregateId(), $aggregateRootMapping->getProperties());
+        foreach ($aggregateRootMappings as $aggregateName => $aggregateKeyValueData) {
+
+            $aggregateId = $this->outbounds->getNewUuid();
+
+            $this->outbounds->createAggregateRoot(
+                $correlationId,
+                $actorEmail,
+                $aggregateId,
+                $aggregateName,
+                $aggregateKeyValueData
+            );
         }
     }
 

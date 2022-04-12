@@ -10,11 +10,11 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Application, Domain, Ports};
 class GetItemHandler implements QueryHandler
 {
     private string $getItemOperationName;
-    private Ports\Configs\Outbounds $outbounds;
+    private Ports\Outbounds $outbounds;
 
     private function __construct(
         string $getItemOperationName,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) {
         $this->getItemOperationName = $getItemOperationName;
         $this->outbounds = $outbounds;
@@ -22,7 +22,7 @@ class GetItemHandler implements QueryHandler
 
     public static function new(
         $getItemOperationName,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) : self {
         return new self(
             $getItemOperationName,
@@ -36,7 +36,7 @@ class GetItemHandler implements QueryHandler
             return $this->process($query, $nextHandlers);
         }
 
-        return $this->outbounds->getProjectionClient()->getItem($query->getProjectionName(), $query->getProjectionId());
+        return $this->outbounds->getProjectedItem($query->getProjectionName(), $query->getProjectionId());
     }
 
     public function process(Query $query, array $nextHandlers) : array

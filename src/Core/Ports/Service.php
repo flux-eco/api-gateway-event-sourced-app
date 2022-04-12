@@ -4,18 +4,18 @@ namespace FluxEco\ApiGatewayEventSourcedApp\Core\Ports;
 
 use FluxEco\ApiGatewayEventSourcedApp\Core\Application\Processes;
 
-class ApiGatewayEventSourcedAppService
+class Service
 {
-    private Configs\Outbounds $outbounds;
+    private Outbounds $outbounds;
 
     private function __construct(
-        Configs\Outbounds $outbounds
+        Outbounds $outbounds
     ) {
         $this->outbounds = $outbounds;
     }
 
     public static function new(
-        Configs\Outbounds $outbounds
+        Outbounds $outbounds
     ) : self {
         return new self(
             $outbounds
@@ -24,18 +24,18 @@ class ApiGatewayEventSourcedAppService
 
     final public function initialize() : void
     {
-        $this->outbounds->getAggregateRootClient()->initializeAggregateRoots();
-        $this->outbounds->getGlobalStreamClient()->initializeGlobalStream();
-        $this->outbounds->getProjectionClient()->initializeProjections();
+        $this->outbounds->initializeAggregateRoots();
+        $this->outbounds->initializeGlobalStream();
+        $this->outbounds->initializeProjections();
     }
 
     public function command(
         string $correlationId,
         string $actorEmail,
         string $requestUri,
-        array $requestContent
+        array $projectionKeyValueData
     ) : void {
-        $commandRequest = Processes\CommandRequest::new($correlationId, $actorEmail, $requestUri, $requestContent);
+        $commandRequest = Processes\CommandRequest::new($correlationId, $actorEmail, $requestUri, $projectionKeyValueData);
         Processes\CommandRequestProcess::new($this->outbounds)->process($commandRequest);
     }
 
@@ -49,7 +49,7 @@ class ApiGatewayEventSourcedAppService
         return Processes\QueryRequestProcess::new($this->outbounds)->process($queryRequest);
     }
 
-    final public function storeItemByExternalId(
+    /*final public function storeItemByExternalId(
         string $correlationId,
         string $actorEmail,
         string $projectionName,
@@ -63,6 +63,6 @@ class ApiGatewayEventSourcedAppService
             return;
         }
         $this->updteItem($correlationId, $actorEmail, $projectionName, $projectionId, $data);
-    }
+    }*/
 
 }

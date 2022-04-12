@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.1.0] - Functional Usage
+* added functional usage
+
 ## [1.0.0] - First Release
 Features
 * initialize

@@ -10,5 +10,5 @@ function query(
     string $requestUri,
     array $requestContent
 ) : array {
-    ApiGatewayEventSourcedApp\Api::new()->query($correlationId, $actorEmail, $requestUri, $requestContent);
+    return ApiGatewayEventSourcedApp\Api::new()->query($correlationId, $actorEmail, $requestUri, $requestContent);
 }

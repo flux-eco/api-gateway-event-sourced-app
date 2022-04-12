@@ -13,7 +13,7 @@ class Command
     private string $operationName;
     private string $projectionName;
     private string $projectionId;
-    private array $requestContent;
+    private array $keyValueData;
     private string $externalId;
 
     private function __construct(
@@ -22,7 +22,7 @@ class Command
         string $actorEmail,
         string $operationName,
         string $projectionName,
-        array $requestContent,
+        array $keyValueData,
         string $projectionId,
         string $externalId
     ) {
@@ -31,7 +31,7 @@ class Command
         $this->actorEmail = $actorEmail;
         $this->operationName = $operationName;
         $this->projectionName = $projectionName;
-        $this->requestContent = $requestContent;
+        $this->keyValueData = $keyValueData;
         $this->projectionId = $projectionId;
         $this->externalId = $externalId;
     }
@@ -42,7 +42,7 @@ class Command
         string $actorEmail,
         string $operationName,
         string $projectionName,
-        array $requestContent,
+        array $keyValueData,
         string $projectionId = '',
         string $externalId = ''
     ) {
@@ -52,7 +52,7 @@ class Command
             $actorEmail,
             $operationName,
             $projectionName,
-            $requestContent,
+            $keyValueData,
             $projectionId,
             $externalId
         );
@@ -73,9 +73,9 @@ class Command
         return $this->correlationId;
     }
 
-    public function getRequestContent() : array
+    public function getKeyValueData() : array
     {
-        return $this->requestContent;
+        return $this->keyValueData;
     }
 
     public function getOperationName() : string

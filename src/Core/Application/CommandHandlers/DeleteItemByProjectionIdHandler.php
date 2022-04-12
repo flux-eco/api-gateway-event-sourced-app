@@ -11,27 +11,23 @@ use FluxEco\ApiGatewayEventSourcedApp\Core\{Ports};
  */
 class DeleteItemByProjectionIdHandler {
     private string $deleteItemOperationName;
-    private Ports\AggregateRoot\AggregateRootClient $aggregateRootClient;
-    private Ports\Projection\ProjectionClient $projectionClient;
+    private Ports\Outbounds $outbounds;
 
     private function __construct(
         string $deleteItemOperationName,
-        Ports\AggregateRoot\AggregateRootClient $aggregateRootClient,
-        Ports\Projection\ProjectionClient $projectionClient
+        Ports\Outbounds $outbounds
     ) {
         $this->deleteItemOperationName = $deleteItemOperationName;
-        $this->aggregateRootClient = $aggregateRootClient;
-        $this->projectionClient = $projectionClient;
+        $this->outbounds = $outbounds;
     }
 
     public static function new(
         $deleteItemOperationName,
-        Ports\Configs\Outbounds $outbounds
+        Ports\Outbounds $outbounds
     ) {
         return new self(
             $deleteItemOperationName,
-            $outbounds->getAggregateRootClient(),
-            $outbounds->getProjectionClient()
+            $outbounds
         );
     }
 
@@ -49,16 +45,15 @@ class DeleteItemByProjectionIdHandler {
 
         $correlationId = $command->getCorrelationId();
         $actorEmail = $command->getActorEmail();
+        $projectionName = $command->getProjectionName();
         $projectionId = $command->getProjectionId();
 
-        $aggregateRootMappings = $this->projectionClient->getAggregateRootMappingsForProjectionId($projectionId);
+        $aggregateIds = $this->outbounds->getAggregateIdsForProjectionId($projectionName, $projectionId);
 
-        if ($aggregateRootMappings !== null) {
-            foreach ($aggregateRootMappings as $mapping) {
-                $this->aggregateRootClient->delete($correlationId, $actorEmail, $mapping->getAggregateName(),
-                    $mapping->getAggregateId());
-            }
+        foreach ($aggregateIds  as $aggregateName => $aggregateId) {
+            $this->outbounds->deleteAggregateRoot($correlationId, $actorEmail, $aggregateId, $aggregateName);
         }
+
     }
 
     public function process(Command $command, array $nextHandlers) : void

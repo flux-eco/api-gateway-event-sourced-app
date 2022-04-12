@@ -4,11 +4,11 @@ namespace fluxApiGatewayEventSourcedApp;
 
 use FluxEco\ApiGatewayEventSourcedApp;
 
-function query(
+function command(
     string $correlationId,
     string $actorEmail,
     string $requestUri,
-    array $requestContent
-) : array {
-    ApiGatewayEventSourcedApp\Api::new()->command($correlationId, $actorEmail, $requestUri, $requestContent);
+    array $projectionKeyValueData
+) : void {
+    ApiGatewayEventSourcedApp\Api::new()->command($correlationId, $actorEmail, $requestUri, $projectionKeyValueData);
 }

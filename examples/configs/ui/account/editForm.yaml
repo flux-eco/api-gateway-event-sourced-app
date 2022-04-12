@@ -1,0 +1,20 @@
+properties:
+  - title:
+      type: lngKey
+      key: account.firstname
+    key: firstname
+    dataIndex: firstname
+    valueType: string
+    width: m
+    formItemProps:
+      rules:
+        - required: true
+          message: Please enter a firstname
+  - title:
+      type: lngKey
+      key: account.lastname
+    key: lastname
+    dataIndex: lastname
+    valueType: string
+    width: m
+    formItemProps: [ ]

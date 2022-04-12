@@ -1,0 +1,8 @@
+pageTitle:
+  account: Account
+account:
+  firstname: Vorname
+  lastname: Nachame
+action:
+  delete: Loeschen
+  edit: Bearbeiten
