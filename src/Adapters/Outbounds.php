@@ -59,6 +59,10 @@ class Outbounds implements Ports\Outbounds
         fluxProjection\initialize();
     }
 
+    final public function reinitializeProjections(): void {
+        fluxProjection\reinitialize();
+    }
+
     final public function getNewUuid(): string
     {
         return fluxValueObject\getNewUuid();

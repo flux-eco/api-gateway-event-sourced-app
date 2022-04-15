@@ -1,7 +1,7 @@
 {
   "name": "flux-eco/api-gateway-event-sourced-app",
   "description": "Manage requests from outside for an event sourced application",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "type": "flux-app",
   "keywords": [
     "flux-eco",
@@ -38,6 +38,7 @@
   "autoload": {
     "files": [
       "fn/initialize.php",
+      "fn/reinitialize.php",
       "fn/command.php",
       "fn/query.php"
     ],

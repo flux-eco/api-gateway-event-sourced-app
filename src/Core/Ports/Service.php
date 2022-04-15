@@ -29,6 +29,13 @@ class Service
         $this->outbounds->initializeProjections();
     }
 
+    final public function reinitialize() : void
+    {
+        $this->outbounds->initializeAggregateRoots();
+        $this->outbounds->initializeGlobalStream();
+        $this->outbounds->reinitializeProjections();
+    }
+
     public function command(
         string $correlationId,
         string $actorEmail,

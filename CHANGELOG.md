@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.2.0] - Functional Usage
+* added reinitialize
+
 ## [1.1.1] - Functional Usage
 * removed unused adapter
 
