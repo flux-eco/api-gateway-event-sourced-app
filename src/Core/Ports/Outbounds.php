@@ -15,6 +15,8 @@ interface Outbounds
 
     public function initializeProjections(): void;
 
+    public function reinitializeProjections(): void;
+
     public function getAggregateRootMappingsForProjectionData(string $projectionName, array $keyValueData): array;
     public function getAggregateIdForProjectionId(string $projectionName, string $projectionId, string $aggregateName): ?string;
     public function getAggregateIdsForProjectionId(string $projectionName, string $projectionId): array;

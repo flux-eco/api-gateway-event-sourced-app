@@ -27,6 +27,11 @@ class Api
         $this->gatewayService->initialize();
     }
 
+    public function reinitialize() : void
+    {
+        $this->gatewayService->reinitialize();
+    }
+
     public function command(
         string $correlationId,
         string $actorEmail,
