@@ -22,7 +22,7 @@ interface Outbounds
     public function getAggregateIdsForProjectionId(string $projectionName, string $projectionId): array;
 
     public function getProjectedItem(string $projectionName, string $projectionId): array;
-    public function getProjectedItemList(string $projectionName, array $filter): array;
+    public function getProjectedItemList(string $projectionName, array $queryParameter): array;
 
     public function getNewUuid(): string;
 }

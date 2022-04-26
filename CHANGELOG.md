@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [1.3.0] - Functional Usage
+* changed api definition
+
 ## [1.2.0] - Functional Usage
 * added reinitialize
 
