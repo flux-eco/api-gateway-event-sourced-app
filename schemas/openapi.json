@@ -29,6 +29,38 @@
               "type": "string"
             },
             "description": "Query items by its parent"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The numbers of items to return"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "$ref": "#/components/schemas/sort"
+            },
+            "description": "Sort key and direction"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A search string"
           }
         ],
         "responses": {
@@ -392,7 +424,7 @@
           }
         }
       },
-      "PageDefinition": {
+      "page": {
         "type": "object",
         "properties": {
           "title": {
@@ -404,20 +436,53 @@
           "pageType": {
             "type": "string"
           },
+          "table": {
+            "$ref": "#/components/schemas/table"
+          },
           "createForm": {
             "$ref": "#/components/schemas/createForm"
           },
           "editForm": {
             "$ref": "#/components/schemas/editForm"
           },
-          "tableFilter": {
-            "type": "array"
-          },
-          "tableColums": {
-            "type": "array"
-          },
           "itemActions": {
             "type": "array"
+          }
+        }
+      },
+      "table": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/column"
+            }
+          }
+        }
+      },
+      "sort": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "string"
+          }
+        }
+      },
+      "column": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "dataIndex": {
+            "type": "string"
+          },
+          "sorter": {
+            "type": "boolean"
           }
         }
       },
